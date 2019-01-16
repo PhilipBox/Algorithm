@@ -1,1 +1,1 @@
-# Repository for Algorithm study
+## Repository for Algorithm study
