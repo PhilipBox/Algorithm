@@ -17,7 +17,9 @@ using namespace std;
 int main(void)
 {
 
-    int num[100];
+    // 배열 범위 주의하기. 100으로 했을 때 실패함.
+    // 입력범위의 최대값까지 입력해보는 습관.
+    int num[10000];
     int n, total;
 
     scanf("%d", &n);
