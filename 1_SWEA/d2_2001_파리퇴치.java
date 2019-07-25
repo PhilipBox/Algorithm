@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 package day00_study;
 
 import java.util.Scanner;
 
 public class  d2_2001_파리퇴치 {
+=======
+package studyClass;
+
+import java.util.Scanner;
+
+public class d2_2001_파리퇴치 {
+>>>>>>> b1bd487deddb5b0013e11bc66ea8fb0c5f0e44e7
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
@@ -51,4 +59,9 @@ public class  d2_2001_파리퇴치 {
 		}
 		return sum;
 	}//end scan method
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> b1bd487deddb5b0013e11bc66ea8fb0c5f0e44e7
 }
