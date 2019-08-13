@@ -1,13 +1,12 @@
-package solving2;
+package studyClass;
 
 import java.util.Scanner;
 
-public class d3_1240_단순2진암호코드 {
+public class d3_1240_단순2진암호코드 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
 		for(int tc=1; tc<=T; tc++) {
-			
 			int N = sc.nextInt();
 			int M = sc.nextInt();
 			
@@ -18,11 +17,9 @@ public class d3_1240_단순2진암호코드 {
 			//한줄 받아
 			String tmp = sc.next();
 			
-			//한줄받아서 검사하고 코드를 발견했으면 break
-			if(findCode(code, tmp)) {
-				break;
-			}
-		}//end N line
+				//한줄받아서 검사하고 코드를 발견했으면 break
+				findCode(code, tmp);
+			}//end N line
 			
 			//code에 56개의 코드가 들어와있음.
 			//String으로 8개의 코드로 옮김
@@ -30,15 +27,23 @@ public class d3_1240_단순2진암호코드 {
 			int[] numCode = new int[8];
 			numCode = returnNumCode(newCode);
 			
-			for(int j=0; j<8 ; j ++) {
-				System.out.println(numCode[j] + " ");
-			}
 			
+			if(checkCode(numCode)) {
+				System.out.print("#"+tc+" ");
+				int result=0;
+				for(int i=0; i<8; i++) {
+					result+=numCode[i];
+				}
+				System.out.println(result);
+			}
+			else
+				System.out.println("#"+tc+" "+"0");
 		}//end test cases
 	}//end main
 	
-	static boolean findCode(char[] str, String tmp) {
+	static void findCode(char[] str, String tmp) {
 		int cnt=55;
+		if(str[55]==0) {
 		for(int i=tmp.length()-1; i>=0; i--) {
 			//1을 발견했으면 그 지점부터 str에 싹 담는다.
 			if(tmp.charAt(i)=='1') {
@@ -50,11 +55,12 @@ public class d3_1240_단순2진암호코드 {
 					if(cnt<0)
 						break;
 				}
-				return true;
+				break;
 			}
 			//1을 못봤으면 그냥 다 돌고 return false하겠지.
 		}
-		return false;
+//		return false;
+		}
 	}
 	
 	static String[] sevenCode(char[] str) {
@@ -133,16 +139,22 @@ public class d3_1240_단순2진암호코드 {
 		}
 		return numCode;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	static boolean checkCode(int[] numCode) {
+		//0 2 4 6 
+		int sum1=0;
+		
+		//1 3 5
+		int sum2=0;
+		for(int i=0; i<7; i++) {
+			if(i%2==0)
+				sum1+= numCode[i];
+			else
+				sum2+= numCode[i];
+		}
+		if( (sum1*3 + sum2 + numCode[7])%10==0)
+			return true;
+		else
+			return false;
+	}
 }
