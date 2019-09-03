@@ -1,6 +1,6 @@
-import java.util.Scanner;
+﻿import java.util.Scanner;
 
-public class 정삭각형방 {
+public class d4_1861_정사각형방T{
 	static int[][] map;
 	static int N;
 	public static void main(String[] args) {
