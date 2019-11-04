@@ -1,128 +1,76 @@
-package _1104;
-
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Scanner;
 
-public class swea {
-	static class POS implements Comparable<POS>{
-		int r;
-		int c;
+public class jungol_오목{
+	private static class Node implements Comparable<Node> {
+		int r, c;
 
-		public POS(int r, int c) {
+		public Node(int r, int c) {
 			this.r = r;
 			this.c = c;
 		}
+
 		@Override
-		public int compareTo(POS o) {
+		public int compareTo(Node o) {
+			if (this.c == o.c)
+				return this.r - o.r;
 			return this.c - o.c;
 		}
 	}
 
-	static int[][] map;
-	static final int SIZE = 19;
-	static ArrayList<POS> list;
-	public static void main(String[] args) {
+	private final static int N = 19;
+	private static int[] dr = { -1, 0, 1, 1, 1, 0, -1, -1 };
+	private static int[] dc = { 1, 1, 1, 0, -1, -1, -1, 0 };
+	private static int[][] area;
+	private static int[][][] chk;
+	private static LinkedList<Node> list;
+
+	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		map = new int[SIZE][SIZE];
-		list = new ArrayList<POS>();
-		for (int i = 0; i < SIZE; i++)
-			for (int j = 0; j < SIZE; j++)
-				map[i][j] = sc.nextInt();
-
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				// 탐색
-				if (map[i][j] == 0)
-					continue;
-				else {
-					check(i, j, map[i][j]);
-				}
-
-				if (flag) {
-					System.out.println(ans);
-					System.out.println((ansR + 1) + " " + (ansC + 1));
-					return;
-				}
-			} // end j loop
-		} // end i loop
-		System.out.println("0");
-	}// end main
-
-	// 우 하 우하각
-	static int[] dr = { 0, 1, 1, 1 };
-	static int[] dc = { 1, 0, 1, -1 };
-
-	static void check(int r, int c, int color) {
-		for (int i = 0; i < 4; i++) {
-			int nr = r + dr[i];
-			int nc = c + dc[i];
-			// 배열범위 초과
-			if (nr < 0 || nc < 0 || nr >= SIZE || nc >= SIZE)
-				continue;
-			// 색깔 다름
-			if (map[nr][nc] != color)
-				continue;
-
-			// 색깔 같음
-			// dfs 시작 (좌표 + 방향 + 색깔)
-			list.add(new POS(r,c));
-			dfs(r, c, i, color);
-			System.out.println("+========");
-			if(list.size()>5) {
-				list.clear();
-				continue;
-			}
-			if(list.size()==5) {
-				for(int q=0; q<list.size(); q++) {
-					System.out.println(list.get(i).r +"," + list.get(i).c);
-				}
-				flag = true;
-				ans = color;
-				Collections.sort(list);
-				ansR = list.get(0).r;
-				ansC = list.get(0).c;
-				return;
+		area = new int[N][N];
+		chk = new int[N][N][8];
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				area[i][j] = sc.nextInt();
 			}
 		}
-	}// end check
 
-	static int ans;
-	static int ansR;
-	static int ansC;
-	static boolean flag = false;
-
-	static void dfs(int r, int c, int dir, int color) {
-		System.out.println(r+","+c+" 들어옴 // " + color);
-		int cnt = 1;
-		int nr = r;
-		int nc = c;
-		while (true) {
-			nr += dr[dir];
-			nc += dc[dir];
-			System.out.println(nr +"," + nc);
-			if (nr < 0 || nc < 0 || nr >= SIZE || nc >= SIZE) {
-				list.clear();
-				break;
-			}
-			if (map[nr][nc] != color) {
-				list.clear();
-				return;
-			}
-			cnt++;
-			list.add(new POS(nr,nc));
-			if (cnt >= 6) {
-				break;
+		boolean flag = false;
+		out: for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if (area[i][j] != 0) {
+					for (int d = 0; d < 8; d++) {
+						chk[i][j][d] = 1;
+						int nr = i + dr[d];
+						int nc = j + dc[d];
+						if (nr < 0 || nc < 0 || nr >= N || nc >= N || chk[nr][nc][d] == 1 || area[nr][nc] != area[i][j])
+							continue;
+						list = new LinkedList<>();
+						list.add(new Node(i, j));
+						if (check(nr, nc, d, area[nr][nc]) == 4) {
+							Collections.sort(list);
+							System.out.println(area[i][j]);
+							System.out.println((list.get(0).r + 1) + " " + (list.get(0).c + 1));
+							flag = true;
+							break out;
+						}
+					}
+				}
 			}
 		}
+		if (!flag)
+			System.out.println(0);
 	}
 
-	static void print() {
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				System.out.print(map[i][j] + " ");
-			}
-			System.out.println();
-		}
+	private static int check(int r, int c, int d, int nowColor) {
+		list.add(new Node(r, c));
+		chk[r][c][d] = 1;
+		int nr = r + dr[d];
+		int nc = c + dc[d];
+		if (nr < 0 || nc < 0 || nr >= N || nc >= N || area[nr][nc] != nowColor)
+			return 1;
+		return check(nr, nc, d, nowColor) + 1;
 	}
 }
