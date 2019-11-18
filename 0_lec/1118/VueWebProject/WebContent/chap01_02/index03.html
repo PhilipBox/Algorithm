@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SSAFY</title>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="app">
+		<div>{{message}}</div>
+		<div v-if="isShow">
+			<div>v-if ===> {{message}}</div>
+		</div>
+		<div v-show="isShow">
+			<div>v-show ===> {{message}}</div>
+		</div>
+		<br>
+		<div v-on:click="methodtest">methodtest Click</div>
+	</div>
+
+	<!--함수 선언  -->
+
+	<script>
+	new Vue({
+		el:"#app",
+			<!-- 메시지 안주더라도 초기화는 해줘야 한다.-->	
+		data:{ message : "SSAFY"},
+		computed:{
+			isShow: function(){
+				alert("computed");
+				return this.message.length>6;
+			}
+		},
+		filters :{
+			<!-- data를 가지고 작업하고 싶을 때 -->
+			toUpper(value){
+				return value.toUpperCase();
+			},
+			toLower(value){
+				return value.toLowerCase();
+			},
+			toValue3(value){
+				var s="";
+				for(i=0; i<3; i++){
+					s += (value+" ");
+				}
+				return s;
+			}			
+		},
+		methods :{
+			hello : function(){
+				return this.message="change data";
+			},
+			hello2 : function(num){
+				return num + " : " + arguments[1] + " 번입니다.";
+			},
+			methodtest : function(){
+				alert("MethodTest")
+				return this.$data.message += this.$data.message;
+			}
+		}
+	});
+</script>
+
+</body>
+</html>

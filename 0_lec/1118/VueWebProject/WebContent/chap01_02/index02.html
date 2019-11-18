@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SSAFY</title>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="app">
+		<div>{{message}}</div>
+		<div>{{hello()}}</div>
+		<div>{{hello2(10,20)}}</div>
+		<br>
+		<div>결과반복 필터 : {{data | toValue3}}</div>
+		<div>결과반복 필터 : {{hello() | toValue3}}</div>
+		<div>대문자 필터 : {{data | toUpper}}</div>
+		<div>소문자 필터 : {{data | toLower}}</div>
+	</div>
+
+	<!--함수 선언  -->
+
+	<script>
+	new Vue({
+		el:"#app",
+			<!-- 메시지 안주더라도 초기화는 해줘야 한다.-->	
+		data:{ message : "<h2>Hello Vue</h2>" , data : "hello Data"},
+		filters :{
+			<!-- data를 가지고 작업하고 싶을 때 -->
+			toUpper(value){
+				return value.toUpperCase();
+			},
+			toLower(value){
+				return value.toLowerCase();
+			},
+			toValue3(value){
+				var s="";
+				for(i=0; i<3; i++){
+					s += (value+" ");
+				}
+				return s;
+			}			
+		},
+		methods :{
+			hello : function(){
+				return "change data";
+			},
+			hello2 : function(num){
+				return num + " : " + arguments[1] + " 번입니다.";
+			}
+		}
+	});
+</script>
+
+</body>
+</html>

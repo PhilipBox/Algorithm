@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SSAFY</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<!-- 배열 객체일 경우 (정리할것) -->
+<body>
+	<div id="app">
+		<!--  
+		<h2 v-for="(value, name, index) in items">{{ index+"번째 물품 :
+			"+name+", 가격 : "+value}}</h2>
+		-->
+
+		<div v-for="(item, index) in items">
+			<h2 v-for="(itemm, name, index2) in item">{{index2+" "+itemm+" "+name}}</h2>
+		</div>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el : "#app",
+			data : {
+				items : [ {
+					pencil : 100,
+					pen : 200,
+					eraser : 300
+				}, {
+					pencil : 1000,
+					pen : 2000,
+					eraser : 3000
+				} ]
+			}
+		});
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="first">
+		<svg width="400" height="100">
+			<my-circle ccx='50' ccy='50' cr='40' csw="4" cf="#646464" cs="green"></my-circle>
+			<my-circle ccx='150' ccy='50' cr='40'csw="4" cf="blue" cs="red"></my-circle>
+			<my-circle ccx='250' ccy='50' cr='40' csw="6" cf="yellow" cs="black"></my-circle>
+		</svg>
+	</div>
+	<script>
+
+		var app = new Vue({
+			el : "#first",
+			data : {title : "SSAFY"},
+			<!-- 내부 컴포넌트 -->
+			components : {"my-circle" : {
+				props:['ccx','ccy','cr', 'csw', 'cf', 'cs'],
+				template : '<circle :cx="ccx" :cy="ccy" :r ="cr" :stroke-width="csw" :fill="cf" :stroke="cs"/>'
+			}}
+		});
+		Vue.config.devtools =true;
+	</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SSAFY</title>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="first">
+		{{message}}
+		<div v-on:click="hello()">눌렁</div>
+		<div @click="hello()">눌렁</div>
+	</div>
+	<div onclick="hello()">눌러</div>
+
+	<script>
+		var app = new Vue({
+			el : "#first",
+			data : { message : "SSAFY" },
+			methods: {hello:function(){this.message = "1000"}}
+		});
+		function hello(){
+			alert("outer hello");
+			app.message = 2000;
+		}
+		Vue.config.devtools = true;
+	</script>
+
+</body>
+</html>
